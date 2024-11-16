@@ -1,4 +1,4 @@
-const AddToCart = require('../model/AddToCartModel');
+const AddToCart = require('../model/Addtocartmodel');
 
 // Add a product to the cart
 exports.addProductToCart = (req, res) => {
