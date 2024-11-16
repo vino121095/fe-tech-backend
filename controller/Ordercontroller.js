@@ -1,4 +1,4 @@
-const Order = require('../model/OrderModel');
+const Order = require('../model/Ordermodel');
 
 // Controller function to place an order
 exports.placeOrder = (req, res) => {
