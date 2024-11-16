@@ -1,24 +1,38 @@
-const db = require('../config/db');
+const {Sequelize} = require('sequelize');
+const {DataTypes} = Sequelize;
+const sequelize = require('../config/db');
 
-const User = {
-    // Add new user
-    registerUser: (user, callback) => {
-        const userSql = `
-            INSERT INTO user (username, email, password)
-            VALUES (?, ?, ?)
-        `;
-        const userValues = [user.username, user.email, user.password];
-
-        // Insert user details
-        db.query(userSql, userValues, callback);
+const User = sequelize.define('User', {
+  uid: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: true,
     },
-    findByUsername: (username, callback) => {
-        const sql = 'SELECT * FROM user WHERE username = ?';
-        db.query(sql, [username], (err, results) => {
-            if (err) return callback(err);
-            callback(null, results[0]); // Return the first result, if found
-        });
-    }
-};
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  isadmin: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+}, {
+  tableName: 'user',
+  timestamps: true,
+});
 
 module.exports = User;
